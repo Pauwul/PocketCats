@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <div id="app1"></div>
+    <div id="app2"></div>
+    <div id="links"></div>
+    <! -- Astea sunt compilere --!>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/javascript">
+      /////////playing with JS + DOM
+
+      // Select the div elements with 'app1' and 'app2' ids
+      const app1 = document.getElementById('app1');
+      const app2 = document.getElementById('app2');
+      
+      // Create two new H1 elements
+      const header1 = document.createElement('h1');
+      const header2 = document.createElement('h1');
+
+      // Create text nodes for the H1 elements
+      const headerContent1 = document.createTextNode('Develop. Preview. Ship. 1');
+      const headerContent2 = document.createTextNode('Develop. Preview. Ship. 2');
+
+      // Append the text nodes to the H1 elements
+      header1.appendChild(headerContent1);
+      header2.appendChild(headerContent2);
+
+      // Place the H1 elements inside the divs
+      app1.appendChild(header1);
+      app2.appendChild(header2);
+    </script>
+    
+    <script type="text/jsx">
+      //Playing with REACT + Dom
+      let header = <h1>Header test</h1>;
+      let app_react = document.getElementById('links');
+      ReactDOM.render(<h1>Develop. Preview. Ship. 🚀 REACTDOM1</h1>, app_react);
+      ReactDOM.render(header, app_react); // fara asta afiseaza Develop...
+    </script>
+  </body>
+</html>
