@@ -1,19 +1,18 @@
-import Head from 'next/head';
-import styles from '../design_css/Home.module.css';
-import React from 'react';
-
-
-
+import Head from "next/head";
+import styles from "../design_css/Home.module.css";
+import React from "react";
 
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
         <title>PocketCats</title>
-        <meta name="description" content="PocketCats - Find and photograph cats in your area" />
+        <meta
+          name="description"
+          content="PocketCats - Find and photograph cats in your area"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
 
       <main className={styles.main}>
         <h1 className={styles.title}>
@@ -27,7 +26,10 @@ export default function Home() {
         <div className={styles.grid}>
           <a href="/how-it-works" className={styles.card}>
             <h2>How it Works &rarr;</h2>
-            <p>Learn how to use PocketCats to find and photograph cats in your neighborhood.</p>
+            <p>
+              Learn how to use PocketCats to find and photograph cats in your
+              neighborhood.
+            </p>
           </a>
 
           <a href="/my-cats" className={styles.card}>
@@ -38,6 +40,13 @@ export default function Home() {
           <a href="/leaderboard" className={styles.card}>
             <h2>Leaderboard &rarr;</h2>
             <p>See the top PocketCats photographers in your area.</p>
+            <span> Eu-s un span</span> <span> Eu-s un span</span>{" "}
+            <span> Eu-s un span</span> <span> Eu-s un span</span>
+            <div> Eu-s un div</div>
+            <div> Eu-s un div</div>
+            <div> Eu-s un div</div>
+            <div> Eu-s un div</div>
+            <div> Eu-s un div</div>
           </a>
         </div>
       </main>

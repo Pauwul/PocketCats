@@ -14,5 +14,10 @@
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "prettier-airbnb-config": "^1.0.0",
+    "prettier-eslint": "^15.0.1"
   }
 }
