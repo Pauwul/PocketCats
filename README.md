@@ -53,17 +53,21 @@ description
 
 ## Technologies
 
-#### Frontend
+#### Frontend :
 
-[![My Skills](https://skillicons.dev/icons?i=nodejs,nextjs,tailwind,figma&theme=light)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=nodejs,nextjs,tailwind,figma,ts,electron,&theme=light)](https://skillicons.dev)
 
-#### Backend
+#### Backend :
 
-[![My Skills](https://skillicons.dev/icons?i=spring,java,gradle,hibernate,postgres)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=spring,java,maven,hibernate,express,postgres)](https://skillicons.dev)
 
-#### Infra
+#### Infra :
 
-[![My Skills](https://skillicons.dev/icons?i=docker,github,vercel)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=docker,github,vercel,githubactions,gulp,git)](https://skillicons.dev)
+
+#### Devtools:
+
+[![My Skills](https://skillicons.dev/icons?i=eclipse,idea,vscode,postman,)](https://skillicons.dev)
 
 ## Features
 
@@ -94,8 +98,8 @@ description
 ## Installation
 
 ```bash
-    git clone https://github.com/Pauwul/PocketCats
-    docker compose up
+git clone https://github.com/Pauwul/PocketCats
+docker compose up
 ```
 
 > Note:
@@ -103,18 +107,20 @@ description
 > Depending on the version of docker and OS, you may need to use:
 
 ```bash
-    docker-compose up # instead of docker compose up
+docker-compose up # instead of docker compose up
 ```
 
 What the script above does:
 
-- Pulls the images for Postgres, Next and Java
-- Runs the migrations in the Postgres DB instance, the DB is available at the default Postgres port `localhost:5432`. Use your favorite DB client in order to view and edit the tables.
-- Installs dependencies of the frontend (npm install) and runs the frontend environment (npm run dev) at `localhost:3000`
-- Installs the backend dependencies and runs the backend api at `localhost:8080`. You may use postman in order to test the routes.
-- Docs at `localhost:8080/api` implemented with OpenAPI (formerly known as SwaggerDocs).
+- [ ] Pulls the images for Postgres, Next and Java
+- [x] Runs the migrations in the Postgres DB instance, the DB is available at the default Postgres port `localhost:5432`. Use your favorite DB client in order to view and edit the tables.
+- [ ] Installs dependencies of the frontend (npm install) and runs the frontend environment (npm run dev) at `localhost:3000`
+- [ ] Installs the backend dependencies and runs the backend api at `localhost:8080`. You may use postman in order to test the routes.
+- [ ] Docs at `localhost:8080/api` implemented with OpenAPI (formerly known as SwaggerDocs).
 
 ## Contributors
+
+![github stats](https://github-readme-stats.vercel.app/api?username=sarah-hart-landolt&show_icons=true&theme=radical)
 
 <a href="https://github.com/Pauwul/PocketCats/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Pauwul/PocketCats"/>
