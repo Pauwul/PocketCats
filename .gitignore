@@ -1,2 +1,8 @@
 postgres-data
-sql/create_tables.sql
+sql
+sql/*
+sql/*/*
+sql/*/*/*
+
+# Logs
+logs
