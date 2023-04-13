@@ -1,55 +1,31 @@
-import Head from "next/head";
-import styles from "../design_css/Home.module.css";
+"use client";
 import React from "react";
+import styles from "../design_css/FrontPage.module.css";
+import Link from 'next/link';
 
-export default function Home() {
+const FrontPage = () => {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>PocketCats</title>
-        <meta
-          name="description"
-          content="PocketCats - Find and photograph cats in your area"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="#">PocketCats!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Find and photograph cats in your area
+      <div className={styles.topMenu}>
+        <Link href="/login_page">
+          <button className={styles.menuButton}>
+            Sign In
+          </button>
+        </Link>
+        <button className={styles.menuButton}>Register</button>
+        <button className={styles.menuButton}>FAQ</button>
+      </div>
+      <div className={styles.titleContainer}>
+        <h1 className={styles.title}>Pocket Cats</h1>
+        <p className={styles.subtitle}>
+          Collect your friend's cats and vote for the best one!
+          <br />
+          Like pokemon. But more wholesome.
         </p>
-
-        <div className={styles.grid}>
-          <a href="/how-it-works" className={styles.card}>
-            <h2>How it Works &rarr;</h2>
-            <p>
-              Learn how to use PocketCats to find and photograph cats in your
-              neighborhood.
-            </p>
-          </a>
-
-          <a href="/my-cats" className={styles.card}>
-            <h2>My Cats &rarr;</h2>
-            <p>View and manage the cats you've photographed and updated.</p>
-          </a>
-
-          <a href="/leaderboard" className={styles.card}>
-            <h2>Leaderboard &rarr;</h2>
-            <p>See the top PocketCats photographers in your area.</p>
-            <span> Eu-s un span</span> <span> Eu-s un span</span>{" "}
-            <span> Eu-s un span</span> <span> Eu-s un span</span>
-            <div> Eu-s un div</div>
-            <div> Eu-s un div</div>
-            <div> Eu-s un div</div>
-            <div> Eu-s un div</div>
-            <div> Eu-s un div</div>
-          </a>
-        </div>
-      </main>
+      </div>
+      <div className={styles.footer}></div>
     </div>
   );
-}
+};
+
+export default FrontPage;
