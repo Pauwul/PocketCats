@@ -1,0 +1,8 @@
+postgres-data
+sql
+sql/*
+sql/*/*
+sql/*/*/*
+
+# Logs
+logs
