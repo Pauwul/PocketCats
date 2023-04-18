@@ -101,6 +101,9 @@ description
 git clone https://github.com/Pauwul/PocketCats
 docker compose up
 ```
+By default, the database runs at port 80.
+The frontend runs at port 3000.
+The backend runs at port 5432.
 
 > Note:
 > It's required to have docker installed for this to work.
