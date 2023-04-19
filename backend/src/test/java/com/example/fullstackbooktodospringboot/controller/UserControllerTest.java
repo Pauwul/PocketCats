@@ -1,7 +1,7 @@
 package com.example.fullstackbooktodospringboot.controller;
 
-import com.example.fullstackbooktodospringboot.dto.ToDoDto;
-import com.example.fullstackbooktodospringboot.service.ToDoService;
+import com.example.fullstackbooktodospringboot.dto.UserDto;
+import com.example.fullstackbooktodospringboot.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Date;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -21,23 +22,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ToDoControllerTest {
+public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private ToDoService toDoService;
+    private UserService userService;
 
     @Test
     public void getToDosShouldReturnTodos() throws Exception {
-        List<ToDoDto> todos = new ArrayList<>();
-        ToDoDto todoDto = new ToDoDto(1L, "write unit tests", false);
-        todos.add(todoDto);
-        when(toDoService.getToDos()).thenReturn(todos);
-        mockMvc.perform(get("/todos"))
+        List<UserDto> users = new ArrayList<>();
+        Date date = new Date(2023/04/19);
+        UserDto userDto = new UserDto(1L, "Kurame194",date,"kurame194","parola",false );
+        users.add(userDto);
+        when(userService.getUsers()).thenReturn(users);
+        mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name", is(todoDto.getName())));
+                .andExpect(jsonPath("$[0].name", is(userDto.getName())));
     }
 }

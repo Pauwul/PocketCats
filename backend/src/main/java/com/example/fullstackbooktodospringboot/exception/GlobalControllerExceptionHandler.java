@@ -19,9 +19,9 @@ class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(errorDto, ex.getStatus());
     }
 
-    @ExceptionHandler(ToDoException.class)
-    public ResponseEntity<ErrorDto> handleToDoException(ToDoException ex) {
-        log.error("todo custom exception", ex);
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorDto> handleToDoException(UserException ex) {
+        log.error("user custom exception", ex);
         ErrorDto errorDto = new ErrorDto(ex.getMessage());
         HttpStatus httpStatus = HttpStatus.resolve(ex.getStatus());
         return new ResponseEntity<>(errorDto, httpStatus);

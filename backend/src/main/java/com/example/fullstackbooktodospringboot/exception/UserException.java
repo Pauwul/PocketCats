@@ -1,9 +1,9 @@
 package com.example.fullstackbooktodospringboot.exception;
 
-public class ToDoException extends RuntimeException {
+public class UserException extends RuntimeException {
     private int status;
 
-    public ToDoException(int status, String message) {
+    public UserException(int status, String message) {
         super(message);
         this.status = status;
     }
