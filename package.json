@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "react-oauth2-hook": "^1.0.12"
+  }
+}
