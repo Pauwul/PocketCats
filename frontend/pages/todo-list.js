@@ -1,7 +1,7 @@
 import styles from "../styles/todo-list.module.css";
 import { useState, useEffect, useCallback, useRef } from "react";
 import { debounce } from "lodash";
-import ToDo from "./todo";
+import ToDo from "../components/todo";
 
 export default function ToDoList() {
   const [todos, setTodos] = useState(null);

@@ -1,18 +1,18 @@
-import Head from 'next/head'
-import Layout from '../components/layout';
-import ToDoList from '../components/todo-list';
+import Head from "next/head";
+import FrontPage from "../pages/page_old";
 
 export default function Home() {
   return (
-    <div>
+    <>
       <Head>
-        <title>Full Stack Book To Do</title>
+        <title>PocketCats</title>
         <meta name="description" content="Full Stack Book To Do" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <ToDoList />
-      </Layout>
-    </div>
-  )
+      {/* <Layout> */}
+      {/* <ToDoList /> */}
+      {/* </Layout> */}
+      <FrontPage />
+    </>
+  );
 }

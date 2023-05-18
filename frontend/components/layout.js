@@ -1,4 +1,4 @@
-import styles from '../styles/layout.module.css'
+import styles from "../styles/layout.module.css";
 
 export default function Layout(props) {
   return (
@@ -6,5 +6,5 @@ export default function Layout(props) {
       <h1 className={styles.title}>To Do</h1>
       {props.children}
     </div>
-  )
+  );
 }
