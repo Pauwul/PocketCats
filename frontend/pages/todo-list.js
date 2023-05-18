@@ -112,7 +112,7 @@ export default function ToDoList() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} blog-post`}>
       <div className={styles.mainInputContainer}>
         <input
           className={styles.mainInput}
@@ -122,9 +122,9 @@ export default function ToDoList() {
           onKeyDown={handleKeyDown}
         ></input>
       </div>
-      {!todos && <div>Loading...</div>}
+      {!todos && <div className={styles.loading}>Loading...</div>}
       {todos && (
-        <div>
+        <div className={styles.todoList}>
           {todos.map((todo) => {
             return (
               <ToDo
