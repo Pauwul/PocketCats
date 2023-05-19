@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Layout from '../components/layout';
 import ToDoList from '../components/todo-list';
+import LoginPage from '../components/LoginPage';
+import withAuth from '../components/withAuth';
 
-export default function Home() {
+function Home() {
   return (
     <div>
       <Head>
@@ -10,9 +12,8 @@ export default function Home() {
         <meta name="description" content="Full Stack Book To Do" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        <ToDoList />
-      </Layout>
     </div>
   )
 }
+
+export default withAuth(Home);
