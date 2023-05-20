@@ -1,8 +1,11 @@
-package com.example.fullstackbooktodospringboot.auth;
+package com.example.fullstackbooktodospringboot.security;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.stereotype.Component;
+
+import com.example.fullstackbooktodospringboot.model.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -20,9 +23,9 @@ public class TokenProvider {
     private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String createToken(Authentication authentication) {
-        String username = ((DefaultOAuth2User) authentication.getPrincipal()).getName();
+        String username = ((UserPrincipal) authentication.getPrincipal()).getUsername();
         Date now = new Date();
-        System.out.println("Username: " + username);
+        System.out.println("Username in token: " + username);
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(now)

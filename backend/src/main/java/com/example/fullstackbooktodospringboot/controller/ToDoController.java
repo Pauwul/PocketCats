@@ -6,6 +6,7 @@ import com.example.fullstackbooktodospringboot.dto.UpdateToDoDto;
 import com.example.fullstackbooktodospringboot.service.ToDoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class ToDoController {
     private ToDoService toDoService;
 
-    public ToDoController (ToDoService toDoService) {
+    public ToDoController(ToDoService toDoService) {
         this.toDoService = toDoService;
     }
 
@@ -27,7 +28,9 @@ public class ToDoController {
     }
 
     @GetMapping("")
-    public List<ToDoDto> getToDos(@RequestParam Optional<Boolean> completed) {
+    public List<ToDoDto> getToDos(@RequestParam Optional<Boolean> completed, Authentication authentication) {
+        // String username = authentication.getName();
+        // System.out.println("Username2: " + username);
         if (completed.isPresent()) {
             return toDoService.getToDos(completed.get());
         }
@@ -45,7 +48,7 @@ public class ToDoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteToDo(@PathVariable Long id) {
+    public ResponseEntity<HttpStatus> deleteToDo(@PathVariable Long id) {
         toDoService.deleteToDo(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

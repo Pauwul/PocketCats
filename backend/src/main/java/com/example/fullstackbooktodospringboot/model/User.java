@@ -7,19 +7,22 @@ import javax.persistence.*;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name = "users", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
+@Table(name = "users"/*
+                      * , uniqueConstraints = {
+                      * 
+                      * @UniqueConstraint(columnNames = "email")
+                      * }
+                      */)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
-    private String email;
+    private String email = "email-placeholder@email.com";
 
     private String imageUrl;
 
@@ -41,11 +44,11 @@ public class User {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getEmail() {

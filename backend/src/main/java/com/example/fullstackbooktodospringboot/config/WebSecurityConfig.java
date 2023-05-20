@@ -5,24 +5,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.fullstackbooktodospringboot.auth.OAuth2AuthenticationSuccessHandler;
-import com.example.fullstackbooktodospringboot.auth.TokenAuthenticationFilter;
+import com.example.fullstackbooktodospringboot.security.TokenAuthenticationFilter;
+import com.example.fullstackbooktodospringboot.security.oauth2.OAuth2AuthenticationSuccessHandler;
+import com.example.fullstackbooktodospringboot.service.CustomOAuth2UserService;
 
 @EnableWebSecurity
 public class WebSecurityConfig {
 
     @Autowired
     OAuth2AuthenticationSuccessHandler successHandler;
+
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
@@ -42,8 +40,12 @@ public class WebSecurityConfig {
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
                 .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+                .and()
                 .successHandler(successHandler);
         // .successHandler(successHandler);
+        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

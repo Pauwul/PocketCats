@@ -1,9 +1,12 @@
-package com.example.fullstackbooktodospringboot.auth;
+package com.example.fullstackbooktodospringboot.security.oauth2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+
+import com.example.fullstackbooktodospringboot.security.TokenProvider;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
