@@ -1,36 +1,151 @@
+/* Overall container styling */
 .container {
-  width: 300px;
-  border: 1px solid black;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Wrapper styles */
+.wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+html .wrapper,
+body .wrapper {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/* Main input styles */
 .mainInputContainer {
-  width: 100%;
-  margin: 20px 0;
+  margin-bottom: 30px;
 }
 
 .mainInput {
-  padding: 5px;
-  border: 1px solid black;
-  margin: auto;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
   display: block;
-  width: 260px;
-  height: 40px;
+  width: 100%;
+  font-size: 18px;
+  background-color: #f7f7f7;
+  transition: box-shadow 0.3s ease;
+  color: #333;
 }
 
+.mainInput::placeholder {
+  color: #999;
+}
+
+.mainInput:focus {
+  outline: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Filters styles */
 .filters {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  margin-top: 20px;
-  border-top: 1px solid black;
+  align-items: center;
+  padding: 20px 0;
+  border-top: 1px solid #e3e3e3;
 }
 
 .filterBtn {
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+.filterBtn:hover {
+  color: #6c63ff;
 }
 
 .filterActive {
   text-decoration: underline;
+}
+
+/* Blog post styles */
+.blogPost {
+  margin-bottom: 60px;
+}
+
+.blogPostTitle {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.blogPostContent {
+  line-height: 1.6;
+  color: #555;
+}
+
+.author {
+  font-style: italic;
+  color: #888;
+}
+
+.date {
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
+}
+
+/* Read More Link */
+.readMoreLink {
+  display: inline-block;
+  font-size: 16px;
+  color: #6c63ff;
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.readMoreLink:hover {
+  color: #4b46c9;
+}
+
+/* Blog Post Image */
+.blogPostImage {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.postContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.mainInput {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.fileInput {
+  margin-right: 10px;
+}
+
+.postButton {
+  background-color: #1877f2;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
