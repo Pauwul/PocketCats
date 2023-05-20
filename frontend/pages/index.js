@@ -1,7 +1,8 @@
-import Head from "next/head";
-import FrontPage from "../pages/page_old";
 
-export default function Home() {
+import FrontPage from "../pages/page_old";
+import Head from 'next/head';
+
+function Home() {
   return (
     <>
       <Head>
@@ -16,3 +17,5 @@ export default function Home() {
     </>
   );
 }
+
+export default Home;

@@ -1,4 +1,5 @@
 import styles from '../styles/Home_old.module.css';
+import withAuth from '../components/withAuth';
 
 function MyCats() {
   return (
@@ -17,4 +18,4 @@ function MyCats() {
   );
 }
 
-export default MyCats;
+export default withAuth(MyCats);

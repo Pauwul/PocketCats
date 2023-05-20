@@ -1,5 +1,5 @@
 import styles from '../styles/Home_old.module.css';
-
+import withAuth from '../components/withAuth';
 function Leaderboard() {
     return (
       <>
@@ -19,4 +19,4 @@ function Leaderboard() {
   }
   
   
-  export default Leaderboard;
+  export default withAuth(Leaderboard);

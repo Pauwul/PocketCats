@@ -17,11 +17,16 @@ export default function ToDoList() {
   }, []);
 
   async function fetchTodos(completed) {
+    const token = localStorage.getItem('authToken');
     let path = "/todos";
     if (completed !== undefined) {
       path = `/todos?completed=${completed}`;
     }
-    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + path);
+    const res = await fetch(process.env.NEXT_PUBLIC_API_URL + path,{
+      headers: {
+        "Authorization": `Bearer ${token}`,
+      }
+    });
     const json = await res.json();
     setTodos(json);
   }
@@ -48,6 +53,8 @@ export default function ToDoList() {
       name: todo.name,
       completed: todo.completed,
     };
+    const token = localStorage.getItem('authToken');
+    
     const res = await fetch(
       process.env.NEXT_PUBLIC_API_URL + `/todos/${todo.id}`,
       {
@@ -55,12 +62,14 @@ export default function ToDoList() {
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
         },
       }
     );
   }
 
   async function addToDo(name) {
+    const token = localStorage.getItem('authToken');
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/todos`, {
       method: "POST",
       body: JSON.stringify({
@@ -69,6 +78,7 @@ export default function ToDoList() {
       }),
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
     if (res.ok) {
@@ -79,10 +89,12 @@ export default function ToDoList() {
   }
 
   async function handleDeleteToDo(id) {
+    const token = localStorage.getItem('authToken');
     const res = await fetch(process.env.NEXT_PUBLIC_API_URL + `/todos/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
     });
     if (res.ok) {

@@ -3,6 +3,7 @@ import styles from "../styles/Home_old.module.css";
 import React from "react";
 //import Profile from '../components/Profile'
 import ToDoList from "./todo-list";
+import withAuth from "../components/withAuth";
 
 function page_after_login() {
   return (
@@ -54,4 +55,4 @@ function page_after_login() {
   );
 }
 
-export default page_after_login;
+export default withAuth(page_after_login);
