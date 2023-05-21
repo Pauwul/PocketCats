@@ -5,13 +5,42 @@ from flask import Flask, request, jsonify
 from keras.preprocessing.image import img_to_array
 from keras.applications.vgg16 import preprocess_input
 from PIL import Image
-
+from flasgger import Swagger
 
 model = VGG16(weights='imagenet')
 print(model.summary())
 app = Flask(__name__)
+swagger = Swagger(app)
+
 @app.route('/predict', methods=['POST'])
+
 def predict():
+    """
+    Determine if an image contains a cat or not
+    ---
+    tags:
+      - images
+    parameters:
+      - name: image
+        in: body
+        type: file
+        required: true
+        description: the image to use cat detector on
+    responses:
+      200:
+        description: The output values
+        schema:
+            id: prediction
+            properties:
+                result:
+                    type: string
+                    description: Cat || Not a cat
+                    default: Cat
+      404:
+        description: Invalid input
+      500:
+        description: Error
+"""
     # Load the image from the request
     # img = load_img(request.files['image'], target_size=(224, 224))
 
