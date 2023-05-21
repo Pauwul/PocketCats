@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Gallery.module.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const YourCatsGallery = () => {
   const [images, setImages] = useState([]);
@@ -35,24 +37,61 @@ const YourCatsGallery = () => {
     setCatDetails({ ...catDetails, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     setShowAddCatForm(false);
 
     const reader = new FileReader();
     reader.readAsDataURL(catDetails.photo);
-    reader.onloadend = () => {
-      setImages((prevImages) => [
-        ...prevImages,
-        {
-          id: idCounter, // Assign a unique ID to each image
-          image: reader.result,
-          name: catDetails.name,
-          breed: catDetails.breed,
-        },
-      ]);
-      setIdCounter((prevCounter) => prevCounter + 1); // Increment the counter
-    };
+
+    await new Promise((resolve) => {
+      reader.onloadend = resolve;
+    });
+
+    // First, send the image to your Flask API for prediction
+    const formData = new FormData();
+    formData.append("image", catDetails.photo);
+
+    try {
+      console.log("Sending image to API...");
+      const response = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const prediction = await response.json();
+
+      const isCat = prediction.some(
+        (pred) => pred.cat.toLowerCase() === "true"
+      );
+
+      if (isCat) {
+        setImages((prevImages) => [
+          ...prevImages,
+          {
+            id: idCounter,
+            image: reader.result,
+            name: catDetails.name,
+            breed: catDetails.breed,
+          },
+        ]);
+        setIdCounter((prevCounter) => prevCounter + 1);
+      } else {
+        // If it's not a cat, show an error toast
+        toast.error("The image is not a cat!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
+    } catch (error) {
+      console.log("Fetch failed: ", error);
+      toast.error("An error occurred!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
 
     setCatDetails({ name: "", breed: "", photo: null });
   };

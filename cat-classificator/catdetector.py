@@ -2,7 +2,8 @@ from keras.applications.vgg16 import VGG16
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input,decode_predictions
 from flask import Flask, request, jsonify
-from keras.preprocessing.image import img_to_array
+#from keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import img_to_array
 from keras.applications.vgg16 import preprocess_input
 from PIL import Image
 from flasgger import Swagger
