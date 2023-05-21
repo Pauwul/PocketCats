@@ -1,27 +1,38 @@
 from keras.applications.vgg16 import VGG16
-model = VGG16(weights='imagenet')
-print(model.summary())
-
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input,decode_predictions
-import numpy as np
+from flask import Flask, request, jsonify
+from keras.preprocessing.image import img_to_array
+from keras.applications.vgg16 import preprocess_input
+from PIL import Image
 
-img_path = './pisica.jpeg'
-#There is an interpolation method to match the source size with the target size
-#image loaded in PIL (Python Imaging Library)
-img = image.load_img(img_path,color_mode='rgb', target_size=(224, 224))
-img.show()
 
-# Converts a PIL Image to 3D Numy Array
-x = image.img_to_array(img)
-x.shape
-# Adding the fouth dimension, for number of images
-x = np.expand_dims(x, axis=0)
+model = VGG16(weights='imagenet')
+print(model.summary())
+app = Flask(__name__)
+@app.route('/predict', methods=['POST'])
+def predict():
+    # Load the image from the request
+    # img = load_img(request.files['image'], target_size=(224, 224))
 
-#mean centering with respect to Image
-x = preprocess_input(x)
-features = model.predict(x)
-p = decode_predictions(features)
-#print(p)
+    # Load the image from the request
+    img = Image.open(request.files['image'])
+    img = img.resize((224, 224))
+    # Preprocess the image
+    img_array = img_to_array(img)
+    img_array = preprocess_input(img_array)
+    img_array = img_array.reshape(1, 224, 224, 3)
 
-print(p[0][0])
+    # Make the prediction
+    prediction = model.predict(img_array)
+
+    # Return the result
+    # if prediction[0][0][2] > 0.3 and (prediction[0][0][1] == 'tabby' or prediction[0][0][1] == 'tiger_cat' or prediction[0][0][1] == 'Egyptian_cat' ) :
+    print(prediction[0][0] )
+    if prediction[0][0] > 0.3 and (prediction[0][1] == 'tabby' or prediction[0][1] == 'tiger_cat' or prediction[0][1] == 'Egyptian_cat'):
+        return jsonify({'result': 'Not a cat'})
+    else:
+        return jsonify({'result': 'Cat'})
+
+if __name__ == '__main__':
+    app.run(port=8000)
