@@ -38,11 +38,14 @@ const YourCatsGallery = () => {
   };
 
   const handleFormSubmit = async (e) => {
+    console.log("I try");
+
     e.preventDefault();
     setShowAddCatForm(false);
 
     const reader = new FileReader();
     reader.readAsDataURL(catDetails.photo);
+    console.log(catDetails.photo);
 
     await new Promise((resolve) => {
       reader.onloadend = resolve;
@@ -51,13 +54,13 @@ const YourCatsGallery = () => {
     // First, send the image to your Flask API for prediction
     const formData = new FormData();
     formData.append("image", catDetails.photo);
-
     try {
       console.log("Sending image to API...");
       const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
+        method: "POST", // type: form-data, file:""
         body: formData,
       });
+      console.log("But I fail");
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
