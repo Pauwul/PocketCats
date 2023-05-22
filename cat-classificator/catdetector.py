@@ -71,7 +71,7 @@ def predict():
     cat_found = False
     for i in range(3):
         breed = p[0][i][1]
-        if breed in ['tabby', 'tiger_cat', 'Egyptian_cat']:
+        if breed in ['tabby', 'tiger_cat', 'Egyptian_cat', 'Persian_cat', 'Siamese_cat', 'cougar', 'lynx', 'leopard', 'snow_leopard', 'jaguar', 'lion', 'tiger', 'cheetah', 'panther', 'leopard', 'mountain_lion', 'bobcat', 'ocelot', 'lynx', 'wildcat', 'cat']:
             isCat = True
             cat_found = True
         else:
