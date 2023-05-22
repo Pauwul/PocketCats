@@ -1,4 +1,4 @@
-package com.example.fullstackbooktodospringboot.exception;
+package com.example.fullstackbookcatspringboot.exception;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.fullstackbookcatspringboot.dto.ErrorDto;
+import com.example.fullstackbooktodospringboot.exception.ToDoException;
 
 @ControllerAdvice(annotations = RestController.class)
 @Log4j2
@@ -23,6 +24,14 @@ class GlobalControllerExceptionHandler {
     @ExceptionHandler(ToDoException.class)
     public ResponseEntity<ErrorDto> handleToDoException(ToDoException ex) {
         log.error("todo custom exception", ex);
+        ErrorDto errorDto = new ErrorDto(ex.getMessage());
+        HttpStatus httpStatus = HttpStatus.resolve(ex.getStatus());
+        return new ResponseEntity<>(errorDto, httpStatus);
+    }
+
+    @ExceptionHandler(CatException.class)
+    public ResponseEntity<ErrorDto> handleCatException(CatException ex) {
+        log.error("cat custom exception", ex);
         ErrorDto errorDto = new ErrorDto(ex.getMessage());
         HttpStatus httpStatus = HttpStatus.resolve(ex.getStatus());
         return new ResponseEntity<>(errorDto, httpStatus);

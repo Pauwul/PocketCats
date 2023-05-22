@@ -1,4 +1,4 @@
-package com.example.fullstackbooktodospringboot.dto;
+package com.example.fullstackbookcatspringboot.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
