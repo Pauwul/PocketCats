@@ -4,6 +4,7 @@ import React from "react";
 //import Profile from '../components/Profile'
 import ToDoList from "./todo-list";
 import withAuth from "../components/withAuth";
+import { ToastContainer } from "react-toastify";
 
 function page_after_login() {
   return (
@@ -27,6 +28,7 @@ function page_after_login() {
         </p>
 
         <div className={styles.grid}>
+          <ToastContainer />
           <a href="/how-it-works" className={styles.card}>
             <h2>How it Works &rarr;</h2>
             <p>

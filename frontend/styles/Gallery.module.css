@@ -1,0 +1,301 @@
+.gallery {
+  padding: 20px;
+  background-color: #f0f0f0;
+}
+
+.title {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.addButton {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.imageCard {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background: white;
+  padding: 50px;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.formLabel {
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.formInput {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.closeButton:hover {
+  color: #333;
+}
+
+.fileUploadContainer {
+  position: relative;
+}
+
+.fileUploadInput {
+  display: none;
+}
+
+.fileUploadButton {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.formButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.formCancelButton {
+  padding: 10px 20px;
+  background-color: #aaa;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.formSubmitButton {
+  padding: 10px 20px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
+
+.titleContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  color: #333;
+  margin: 0;
+}
+
+.addButton {
+  background-color: #6c63ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.addButton:hover {
+  background-color: #4b46c9;
+}
+
+.photoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 10px; /* Adjust the gap between photos as needed */
+}
+
+.photoCard {
+  width: calc(
+    33.33% - 150px
+  ); /* Adjust the width of each photo card as per your requirements */
+  margin-bottom: 25px;
+}
+
+.photo {
+  width: 100%;
+  height: 300px; /* Adjust the height of the photo container as needed */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  background-size: contain; /* Change this to contain */
+  background-repeat: no-repeat;
+  background-position: center;
+
+  object-fit: contain; /* Add this property */
+}
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* This makes the image scale properly */
+}
+
+.photo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Adjust the background color of the overlay */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo:hover::before {
+  opacity: 1;
+}
+
+.photoDetails {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.photo:hover .photoDetails {
+  opacity: 1;
+}
+
+.deleteButton {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  width: 100vh;
+  height: 200wh; /* Adjust the height of the photo container as needed */
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  background-size: contain; /* Change this to contain */
+  background-repeat: no-repeat;
+  background-position: center;
+
+  object-fit: contain; /* Add this property */
+}
+
+.modalContent img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.selectedImageDetails {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.selectedImageDetails h3 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.selectedImageDetails p {
+  font-size: 16px;
+}
