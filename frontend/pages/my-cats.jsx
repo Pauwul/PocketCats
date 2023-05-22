@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Gallery.module.css";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const YourCatsGallery = () => {
@@ -38,32 +38,37 @@ const YourCatsGallery = () => {
   };
 
   const handleFormSubmit = async (e) => {
-    console.log("I try");
-
     e.preventDefault();
     setShowAddCatForm(false);
 
     const reader = new FileReader();
     reader.readAsDataURL(catDetails.photo);
-    console.log(catDetails.photo);
 
     await new Promise((resolve) => {
       reader.onloadend = resolve;
     });
 
-    // First, send the image to your Flask API for prediction
     const formData = new FormData();
     formData.append("image", catDetails.photo);
+
     try {
-      console.log("Sending image to API...");
       const response = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST", // type: form-data, file:""
+        method: "POST",
         body: formData,
       });
-      console.log("But I fail");
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // Add a condition for a 400 status code
+        if (response.status === 400) {
+          console.log("There are no cats in the photo");
+          toast.error("There are no cats in the photo", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        setCatDetails({ name: "", breed: "", photo: null });
+        return; // Make sure we stop here if the response was not ok
       }
 
       const prediction = await response.json();
@@ -73,6 +78,9 @@ const YourCatsGallery = () => {
       );
 
       if (isCat) {
+        toast.success("Your photo was submitted successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
         setImages((prevImages) => [
           ...prevImages,
           {
@@ -84,13 +92,11 @@ const YourCatsGallery = () => {
         ]);
         setIdCounter((prevCounter) => prevCounter + 1);
       } else {
-        // If it's not a cat, show an error toast
         toast.error("The image is not a cat!", {
           position: toast.POSITION.TOP_CENTER,
         });
       }
     } catch (error) {
-      console.log("Fetch failed: ", error);
       toast.error("An error occurred!", {
         position: toast.POSITION.TOP_CENTER,
       });
@@ -114,6 +120,7 @@ const YourCatsGallery = () => {
 
   return (
     <div className={styles.container}>
+      <ToastContainer />
       <div className={styles.titleContainer}>
         <h1 className={styles.title}>Your Cats Gallery</h1>
         <button className={styles.addButton} onClick={handleAddImage}>
