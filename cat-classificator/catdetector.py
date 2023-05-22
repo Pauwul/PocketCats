@@ -1,7 +1,7 @@
 from keras.applications.vgg16 import VGG16
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.vgg16 import preprocess_input,decode_predictions
-from flask import Flask, request, jsonify
+from flask import Flask, abort, request, jsonify
 from tensorflow.keras.preprocessing.image import img_to_array
 from keras.applications.vgg16 import preprocess_input
 from PIL import Image
@@ -68,16 +68,23 @@ def predict():
 
 
     array = []
+    cat_found = False
     for i in range(3):
         breed = p[0][i][1]
-        if  breed in ['tabby', 'tiger_cat', 'Egyptian_cat']:
+        if breed in ['tabby', 'tiger_cat', 'Egyptian_cat']:
             isCat = True
+            cat_found = True
         else:
             isCat = False
         probability = p[0][i][2]
         array.append({'breed': f'{breed}', 'probability': f'{probability}', 'cat': f'{isCat}'})
+
     # return each element as a json object
-    return jsonify(array)
+    if cat_found:
+      return jsonify(array)
+    else: # If no cat found, return 400   
+      abort(400, description="No cat found in the image.")
+
 
 
 
