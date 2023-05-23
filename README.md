@@ -30,7 +30,7 @@
 </div>
 
 <div  style="display:none" id=description>
-description
+
 </div>
 
 #### Collect your friend's cats and vote for the best one! Like _pokemon_. But more _wholesome_. :heart_eyes_cat:
@@ -73,9 +73,9 @@ description
 
 ### Essential UX
 
-- [ ] Authentication and authorization
-  - [ ] Login
-  - [ ] Register
+- [x] Authentication and authorization
+  - [x] Login
+  - [x] Register
   - [ ] Logout
   - [ ] Forgot password
   - [ ] Reset password
@@ -97,33 +97,28 @@ description
 
 ## Installation
 
+To run the application, run the commands in 4 different terminal windows:
+
 ```bash
-git clone https://github.com/Pauwul/PocketCats
-docker compose up
+docker compose up -d
+cd frontend && npm i && npm run dev
+cd ../backend && mvn spring-boot:run
+cd ../cat-classificator && python3 catdetector.py
 ```
-By default, the database runs at port 80.
-The frontend runs at port 3000.
-The backend runs at port 5432.
 
 > Note:
 > It's required to have docker installed for this to work.
 > Depending on the version of docker and OS, you may need to use:
 
-```bash
-docker-compose up # instead of docker compose up
-```
+What the commands above do:
 
-What the script above does:
-
-- [ ] Pulls the images for Postgres, Next and Java
-- [x] Runs the migrations in the Postgres DB instance, the DB is available at the default Postgres port `localhost:5432`. Use your favorite DB client in order to view and edit the tables.
-- [ ] Installs dependencies of the frontend (npm install) and runs the frontend environment (npm run dev) at `localhost:3000`
-- [ ] Installs the backend dependencies and runs the backend api at `localhost:8080`. You may use postman in order to test the routes.
+- [x] Runs the migrations in the Postgres DB instance, the DB is available at the port `localhost:80`. Use your favorite DB client in order to view and edit the tables.
+- [x] Installs dependencies of the frontend (npm install) and runs the frontend environment (npm run dev) at `localhost:3000`
+- [x] Installs the backend dependencies and runs the backend api at `localhost:5432`. You may use postman in order to test the routes.
+- [x] Runs the flask api for the cat classifier at `localhost:8000`.
 - [ ] Docs at `localhost:8080/api` implemented with OpenAPI (formerly known as SwaggerDocs).
 
 ## Contributors
-
-![github stats](https://github-readme-stats.vercel.app/api?username=sarah-hart-landolt&show_icons=true&theme=radical)
 
 <a href="https://github.com/Pauwul/PocketCats/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Pauwul/PocketCats"/>
