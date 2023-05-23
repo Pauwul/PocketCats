@@ -21,7 +21,8 @@ public class AppControllerTest {
     @Test
     public void getRoot() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk()).andExpect(content().string(containsString("Hello World")));
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Public information available to everyone")));
     }
 
 }

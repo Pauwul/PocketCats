@@ -41,11 +41,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         String username = String.valueOf((Integer) oAuth2User.getAttribute("id"));
-        // System.out.println("Username in user service: " + username);
+        System.out.println("Username in user service: " + username);
         if (!StringUtils.hasLength(username)) {
-            // throw new OAuth2AuthenticationProcessingException("Username not found from
-            // OAuth2 provider");
-            System.out.println("Username not found from OAuth2 provider");
+            // throw new OAuth2AuthenticationException("Username not found from OAuth2
+            // provider");
+            // System.out.println("Username not found from OAuth2 provider");
         }
         // logger.info("OAuth2User attributes: {}", oAuth2User.getAttributes());
         // System.out.println("Username in user service: " + username);
