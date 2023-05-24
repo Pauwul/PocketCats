@@ -5,8 +5,16 @@ import React from "react";
 import ToDoList from "./todo-list";
 import withAuth from "../components/withAuth";
 import { ToastContainer } from "react-toastify";
+import { useRouter } from "next/router";
+import logoutButtonStyles from "../styles/logout-button.module.css"; // Import the logout button styles
 
 function page_after_login() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    router.push("/page_old"); // Replace with your login page route
+  };
   return (
     <div className={styles.container}>
       <Head>
@@ -23,9 +31,7 @@ function page_after_login() {
           Welcome to <a href="#">PocketCats!</a>
         </h1>
 
-        <p className={styles.description}>
-          Find and photograph cats in your area
-        </p>
+        <p className={styles.subtitle}>Find and photograph cats in your area</p>
 
         <div className={styles.grid}>
           <ToastContainer />
@@ -53,6 +59,14 @@ function page_after_login() {
           </a>
         </div>
       </main>
+      <div className="logout-section">
+        <button
+          className={logoutButtonStyles["logout-button"]}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   );
 }
