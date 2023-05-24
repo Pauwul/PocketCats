@@ -10,11 +10,59 @@ const YourCatsGallery = () => {
   const [catDetails, setCatDetails] = useState({
     name: "",
     breed: "",
+    description: "",
     photo: null,
   });
   const [selectedImage, setSelectedImage] = useState(null);
-  const router = useRouter();
-  const [idCounter, setIdCounter] = useState(1); // Counter for assigning IDs
+
+  async function postCat(catDetails) {
+    const token = localStorage.getItem("authToken"); // Assumes you have saved your token in local storage
+    const url = "http://localhost:5432/cats"; // Change this to your actual API endpoint
+
+    console.log("token", token);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(catDetails),
+      });
+
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        toast.success("Your cat was submitted successfully!", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        return jsonResponse;
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
+  async function getDetails() {
+    const token = localStorage.getItem("authToken"); // Assumes you have saved your token in local storage
+    const url = "http://localhost:5432/cats"; // Change this to your actual API endpoint
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } else {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  }
 
   const handleFileChange = (e) => {
     if (e.target.files.length) {
@@ -67,7 +115,7 @@ const YourCatsGallery = () => {
         } else {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        setCatDetails({ name: "", breed: "", photo: null });
+        setCatDetails({ name: "", breed: "", description: "", photo: null });
         return; // Make sure we stop here if the response was not ok
       }
 
@@ -78,19 +126,36 @@ const YourCatsGallery = () => {
       );
 
       if (isCat) {
+        const base64Image = reader.result;
+        let cutData = base64Image.replace("data:image/jpeg;base64,", "");
+        const catData = {
+          name: catDetails.name,
+          breed: catDetails.breed,
+          description: catDetails.description,
+          image: cutData,
+        };
+        console.log(catData);
         toast.success("Your photo was submitted successfully!", {
           position: toast.POSITION.TOP_CENTER,
         });
-        setImages((prevImages) => [
-          ...prevImages,
-          {
-            id: idCounter,
-            image: reader.result,
-            name: catDetails.name,
-            breed: catDetails.breed,
-          },
-        ]);
-        setIdCounter((prevCounter) => prevCounter + 1);
+        const catResponse = await postCat(catData);
+        const howManyCats = await getDetails();
+        
+
+        if (catResponse) {
+          howManyCats.forEach((id) => {
+
+          };
+          setImages((prevImages) => [
+            ...prevImages,
+            {
+              image: reader.result,
+              name: catDetails.name,
+              breed: catDetails.breed,
+              description: catDetails.description,
+            },
+          ]);
+        }
       } else {
         toast.error("The image is not a cat!", {
           position: toast.POSITION.TOP_CENTER,
@@ -102,7 +167,7 @@ const YourCatsGallery = () => {
       });
     }
 
-    setCatDetails({ name: "", breed: "", photo: null });
+    setCatDetails({ name: "", breed: "", description: "", photo: null });
   };
 
   const handleDeleteImage = (event, id) => {
@@ -156,6 +221,17 @@ const YourCatsGallery = () => {
               />
             </label>
             <label className={styles.formLabel}>
+              Description:
+              <input
+                className={styles.formInput}
+                type="text"
+                name="description"
+                onChange={handleFormChange}
+                value={catDetails.description}
+                required
+              />
+            </label>
+            <label className={styles.formLabel}>
               Photo:
               <div className={styles.fileUploadContainer}>
                 <input
@@ -191,6 +267,7 @@ const YourCatsGallery = () => {
               <div className={styles.photoDetails}>
                 <h3>NAME: {image.name}</h3>
                 <h3>BREED: {image.breed}</h3>
+                <h3>DESCRIPTION: {image.description}</h3>
                 <button
                   className={styles.deleteButton}
                   onClick={(event) => handleDeleteImage(event, image.id)}
@@ -209,6 +286,7 @@ const YourCatsGallery = () => {
             <div className={styles.selectedImageDetails}>
               <h3>NAME: {selectedImage.name}</h3>
               <h3>BREED: {selectedImage.breed}</h3>
+              <h3>DESCRIPTION: {selectedImage.description}</h3>
             </div>
           </div>
         </div>
