@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/Gallery.module.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -48,21 +48,44 @@ const YourCatsGallery = () => {
   async function getDetails() {
     const token = localStorage.getItem("authToken"); // Assumes you have saved your token in local storage
     const url = "http://localhost:5432/cats"; // Change this to your actual API endpoint
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
 
-    if (response.ok) {
-      const jsonResponse = await response.json();
-      return jsonResponse;
-    } else {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const jsonResponse = await response.json();
+        const catDetails = await Promise.all(
+          jsonResponse.map(async (id) => {
+            const photoResponse = await fetch(url + `/${id}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            return await photoResponse.json();
+          })
+        );
+
+        setImages(catDetails); // Set images state here
+      } else {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
+  useEffect(() => {
+    getDetails();
+  }, []);
 
   const handleFileChange = (e) => {
     if (e.target.files.length) {
@@ -140,21 +163,10 @@ const YourCatsGallery = () => {
         });
         const catResponse = await postCat(catData);
         const howManyCats = await getDetails();
-        
+        console.log("How many cats", howManyCats);
 
         if (catResponse) {
-          howManyCats.forEach((id) => {
-
-          };
-          setImages((prevImages) => [
-            ...prevImages,
-            {
-              image: reader.result,
-              name: catDetails.name,
-              breed: catDetails.breed,
-              description: catDetails.description,
-            },
-          ]);
+          getDetails();
         }
       } else {
         toast.error("The image is not a cat!", {
@@ -170,10 +182,41 @@ const YourCatsGallery = () => {
     setCatDetails({ name: "", breed: "", description: "", photo: null });
   };
 
-  const handleDeleteImage = (event, id) => {
-    event.stopPropagation(); // Stop the event from bubbling up
-    setImages((prevImages) => prevImages.filter((image) => image.id !== id));
-  };
+  async function handleDeleteImage(event, imageId) {
+    // prevent the click event from triggering the handleImageClick function
+    event.stopPropagation();
+
+    // Add your API endpoint
+    const url = `http://localhost:5432/cats/${imageId}`;
+
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const response = await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // After the item is deleted from the database, remove it from the state
+      setImages((prevImages) =>
+        prevImages.filter((image) => image.id !== imageId)
+      );
+      toast.success("The cat image was deleted successfully!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } catch (error) {
+      toast.error(`An error occurred: ${error.message}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
 
   const handleImageClick = (image) => {
     setSelectedImage(image);
@@ -263,7 +306,11 @@ const YourCatsGallery = () => {
             onClick={() => handleImageClick(image)}
           >
             <div className={styles.photo}>
-              <img src={image.image} alt={image.name} />
+              <img
+                src={`data:image/jpeg;base64,${image.image}`}
+                alt={image.name}
+              />
+
               <div className={styles.photoDetails}>
                 <h3>NAME: {image.name}</h3>
                 <h3>BREED: {image.breed}</h3>
@@ -282,7 +329,10 @@ const YourCatsGallery = () => {
       {selectedImage && (
         <div className={styles.modalOverlay} onClick={handleCloseModal}>
           <div className={styles.modalContent}>
-            <img src={selectedImage.image} alt="Selected Cat" />
+            <img
+              src={`data:image/jpeg;base64,${selectedImage.image}`}
+              alt="Selected Cat"
+            />
             <div className={styles.selectedImageDetails}>
               <h3>NAME: {selectedImage.name}</h3>
               <h3>BREED: {selectedImage.breed}</h3>
