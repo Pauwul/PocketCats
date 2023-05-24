@@ -19,13 +19,25 @@ import com.example.catSpringBoot.model.User;
 import com.example.catSpringBoot.repository.UserRepository;
 import com.example.catSpringBoot.security.UserPrincipal;
 
+/**
+ * The custom oauth2 user service, this service is used to load the user from
+ * the oauth2 provider and save it to the database
+ */
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomOAuth2UserService.class);
+    /**
+     * The user repository
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Load the user from the oauth2 provider
+     * 
+     * @param oAuth2UserRequest the oauth2 user request
+     * @return OAuth2User the oauth2 user
+     * @throws OAuth2AuthenticationException
+     */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
@@ -39,16 +51,21 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
     }
 
+    /**
+     * Process the oauth2 user, save the user to the database if it does not exist
+     * and if
+     * the user exists update the user
+     * 
+     * @param oAuth2UserRequest the oauth2 user request
+     * @param oAuth2User        the oauth2 user
+     * @return OAuth2User
+     */
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         String username = String.valueOf((Integer) oAuth2User.getAttribute("id"));
         System.out.println("Username in user service: " + username);
         if (!StringUtils.hasLength(username)) {
-            // throw new OAuth2AuthenticationException("Username not found from OAuth2
-            // provider");
-            // System.out.println("Username not found from OAuth2 provider");
+            throw new OAuth2AuthenticationException("Username not found from OAuth2 provider");
         }
-        // logger.info("OAuth2User attributes: {}", oAuth2User.getAttributes());
-        // System.out.println("Username in user service: " + username);
         Optional<User> userOptional = userRepository.findByUsername(username);
         User user;
         if (userOptional.isPresent()) {
@@ -61,16 +78,26 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
+    /**
+     * Register a new user
+     * 
+     * @param oAuth2UserRequest the oauth2 user request
+     * @param oAuth2User        the oauth2 user
+     * @return User the saved user
+     */
     private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
         User user = new User();
-
-        // user.setProvider(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()));
-        // user.setProviderId(oAuth2UserInfo.getId());
         user.setName(oAuth2User.getName());
-        // System.out.println("Registered: " + oAuth2User.getName());
         return userRepository.save(user);
     }
 
+    /**
+     * Update an existing user
+     * 
+     * @param existingUser the existing user
+     * @param oAuth2User   the oauth2 user
+     * @return User the updated user
+     */
     private User updateExistingUser(User existingUser, OAuth2User oAuth2User) {
         existingUser.setName(oAuth2User.getName());
         // System.out.println("Updated: " + oAuth2User.getName());

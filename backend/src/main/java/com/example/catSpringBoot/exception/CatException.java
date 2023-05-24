@@ -1,14 +1,31 @@
 package com.example.catSpringBoot.exception;
 
-public class CatException extends RuntimeException{
+/**
+ * Exception for the cat
+ */
+public class CatException extends RuntimeException {
+    /**
+     * The status
+     */
     private int status;
 
-    public CatException(int status,String message){
+    /**
+     * Constructor for the exception
+     * 
+     * @param status  the status
+     * @param message the message
+     */
+    public CatException(int status, String message) {
         super(message);
         this.status = status;
     }
 
-    public int getStatus(){
+    /**
+     * Get the status
+     * 
+     * @return the status
+     */
+    public int getStatus() {
         return status;
     }
 }

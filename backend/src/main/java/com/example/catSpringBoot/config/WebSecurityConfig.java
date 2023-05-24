@@ -13,27 +13,46 @@ import com.example.catSpringBoot.security.TokenAuthenticationFilter;
 import com.example.catSpringBoot.security.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.example.catSpringBoot.service.CustomOAuth2UserService;
 
+/**
+ * Configure Spring Security
+ */
 @EnableWebSecurity
 public class WebSecurityConfig {
-
+    /**
+     * The OAuth2 authentication success handler
+     */
     @Autowired
     OAuth2AuthenticationSuccessHandler successHandler;
-
+    /**
+     * The custom OAuth2 user service
+     */
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
 
+    /**
+     * Create a bean for the token authentication filter
+     * 
+     * @return TokenAuthenticationFilter
+     */
     @Bean
     public TokenAuthenticationFilter tokenAuthenticationFilter() {
         return new TokenAuthenticationFilter();
     }
 
+    /**
+     * Configure the security filter chain
+     * 
+     * @param http HttpSecurity
+     * @return SecurityFilterChain
+     * @throws Exception the exception
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // ...
         http.cors().and()// Enable CORS support
                 .csrf().disable() // Disable CSRF protection for simplicity (enable if needed)
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
@@ -44,50 +63,7 @@ public class WebSecurityConfig {
                 .userService(customOAuth2UserService)
                 .and()
                 .successHandler(successHandler);
-        // .successHandler(successHandler);
         http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-    // CorsConfiguration corsConfiguration = new CorsConfiguration();
-    // corsConfiguration.addAllowedOrigin("localhost:3000");
-    // corsConfiguration.addAllowedMethod("*");
-    // corsConfiguration.addAllowedHeader("*");
-    // corsConfiguration.setAllowCredentials(true);
-
-    // source.registerCorsConfiguration("/**", corsConfiguration);
-    // return source;
-    // }
-    // @Bean
-    // public CorsFilter corsFilter() {
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-    // CorsConfiguration corsConfiguration = new CorsConfiguration();
-    // corsConfiguration.addAllowedOrigin("localhost:3000");
-    // corsConfiguration.addAllowedMethod("*");
-    // corsConfiguration.addAllowedHeader("*");
-    // corsConfiguration.setAllowCredentials(true);
-
-    // source.registerCorsConfiguration("/**", corsConfiguration);
-    // return new CorsFilter(source);
-    // }
-
-    // @Bean
-    // public CorsConfigurationSource corsConfigurationSource() {
-    // UrlBasedCorsConfigurationSource source = new
-    // UrlBasedCorsConfigurationSource();
-    // CorsConfiguration corsConfiguration = new CorsConfiguration();
-    // corsConfiguration.addAllowedOrigin("localhost:3000");
-    // corsConfiguration.addAllowedMethod("*");
-    // corsConfiguration.addAllowedHeader("*");
-    // corsConfiguration.setAllowCredentials(true);
-
-    // source.registerCorsConfiguration("/**", corsConfiguration);
-    // return source;
-    // }
-
 }

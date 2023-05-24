@@ -1,0 +1,10 @@
+com.example.catSpringBoot
+com.example.catSpringBoot.config
+com.example.catSpringBoot.controller
+com.example.catSpringBoot.dto
+com.example.catSpringBoot.exception
+com.example.catSpringBoot.model
+com.example.catSpringBoot.repository
+com.example.catSpringBoot.security
+com.example.catSpringBoot.security.oauth2
+com.example.catSpringBoot.service

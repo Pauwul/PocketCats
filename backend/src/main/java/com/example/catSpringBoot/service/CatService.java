@@ -18,12 +18,24 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service for the cat, this is where the business logic is
+ */
 @Service
 public class CatService {
-
+    /**
+     * Repository for the cat
+     */
     @Autowired
     private CatRepository catRepository;
 
+    /**
+     * Create a cat
+     * 
+     * @param createCatDto the cat to create
+     * @return the created cat
+     * @throws IOException
+     */
     public CatDto createCat(CreateCatDto createCatDto) throws IOException {
         Cat newCat = new Cat();
         newCat.setName(createCatDto.getName());
@@ -36,11 +48,23 @@ public class CatService {
         return new CatDto(cat);
     }
 
+    /**
+     * Get all cats
+     * 
+     * @return all cats
+     * 
+     */
     public List<Long> getCats() {
         List<Cat> cats = catRepository.findAll();
         return (cats.stream().map(Cat::getId)).toList();
     }
 
+    /**
+     * Get cat by id
+     * 
+     * @param id the id of the cat
+     * @return the cat
+     */
     public CatDto getCatById(Long id) {
         Optional<Cat> cat = catRepository.findById(id);
         if (cat.isPresent())
@@ -49,6 +73,14 @@ public class CatService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "getCatById - cat not found");
     }
 
+    /**
+     * Update cat
+     * 
+     * @param id           the id of the cat
+     * @param updateCatDto the cat to update
+     * @return the updated cat
+     * @throws IOException
+     */
     public Long updateCat(Long id, UpdateCatDto updateCatDto) throws IOException {
         Optional<Cat> cat = catRepository.findById(id);
         if (cat.isPresent()) {
@@ -64,6 +96,12 @@ public class CatService {
         }
     }
 
+    /**
+     * Delete cat
+     * 
+     * @param id the id of the cat
+     * @return status of the delete
+     */
     public ResponseEntity<HttpStatus> deleteCat(Long id) {
         Optional<Cat> cat = catRepository.findById(id);
         if (cat.isPresent()) {
