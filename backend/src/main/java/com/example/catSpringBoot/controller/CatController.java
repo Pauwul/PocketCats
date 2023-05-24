@@ -25,49 +25,47 @@ import java.util.List;
 @RestController
 @RequestMapping("/cats")
 public class CatController {
-    
+
     @Autowired
     private CatService catService;
-    
-    
-    public CatController(CatService catService){
-        this.catService = catService;
-    }
 
     @PostMapping("")
-    public ResponseEntity<Long> createCat(@RequestBody CreateCatDto newCat) throws IOException{
+    public ResponseEntity<Long> createCat(@RequestBody CreateCatDto newCat) throws IOException {
         CatDto catDto = catService.createCat(newCat);
         return new ResponseEntity<Long>(catDto.getId(), HttpStatus.CREATED);
     }
 
     @GetMapping("")
-    public List<Long> getCats(CatService catService){
+    public List<Long> getCats() {
         return catService.getCats();
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<CatDto> getCatById(@PathVariable Long id){
-        try{
-        return new ResponseEntity<CatDto>(catService.getCatById(id),HttpStatus.FOUND);
-        }catch( ResponseStatusException e){
+    public ResponseEntity<CatDto> getCatById(@PathVariable Long id) {
+        try {
+            return new ResponseEntity<CatDto>(catService.getCatById(id), HttpStatus.FOUND);
+        } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getStatus());
         }
     }
+
     @PutMapping("/{id}")
-    public  ResponseEntity<HttpStatus> updateCat(@PathVariable Long id, @RequestBody UpdateCatDto updateCatDto) throws IOException{
-        try{
-        return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch(CatException e){
+    public ResponseEntity<HttpStatus> updateCat(@PathVariable Long id, @RequestBody UpdateCatDto updateCatDto)
+            throws IOException {
+        try {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CatException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCat(@PathVariable Long id){
-        try{
-        catService.deleteCat(id);
-        }catch(RuntimeException e){
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+    public ResponseEntity<HttpStatus> deleteCat(@PathVariable Long id) {
+        try {
+            catService.deleteCat(id);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -18,18 +18,13 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class CatService {
 
     @Autowired
     private CatRepository catRepository;
 
-    public CatService(CatRepository catRepository){
-        this.catRepository = catRepository;
-    }
-
-    public CatDto createCat(CreateCatDto createCatDto) throws IOException{
+    public CatDto createCat(CreateCatDto createCatDto) throws IOException {
         Cat newCat = new Cat();
         newCat.setName(createCatDto.getName());
         newCat.setBreed(createCatDto.getBreed());
@@ -41,22 +36,22 @@ public class CatService {
         return new CatDto(cat);
     }
 
-    public List<Long> getCats(){
+    public List<Long> getCats() {
         List<Cat> cats = catRepository.findAll();
         return (cats.stream().map(Cat::getId)).toList();
     }
 
-    public CatDto getCatById(Long id){
+    public CatDto getCatById(Long id) {
         Optional<Cat> cat = catRepository.findById(id);
-        if(cat.isPresent())
+        if (cat.isPresent())
             return new CatDto(cat.get());
         else
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "getCatById - cat not found");
     }
 
-    public Long updateCat(Long id,UpdateCatDto updateCatDto) throws IOException{
+    public Long updateCat(Long id, UpdateCatDto updateCatDto) throws IOException {
         Optional<Cat> cat = catRepository.findById(id);
-        if(cat.isPresent()){
+        if (cat.isPresent()) {
             cat.get().setName(updateCatDto.getName());
             cat.get().setBreed(updateCatDto.getBreed());
             cat.get().setDescription(updateCatDto.getDescription());
@@ -64,21 +59,19 @@ public class CatService {
             cat.get().setImage(result);
             catRepository.saveAndFlush(cat.get());
             return new CatDto(cat.get()).getId();
-        }
-        else{
+        } else {
             throw new CatException(404, "updateCat - cat not found");
         }
     }
 
-    public ResponseEntity<HttpStatus> deleteCat(Long id){
+    public ResponseEntity<HttpStatus> deleteCat(Long id) {
         Optional<Cat> cat = catRepository.findById(id);
-            if(cat.isPresent()){
+        if (cat.isPresent()) {
             catRepository.delete(cat.get());
             return new ResponseEntity<HttpStatus>(HttpStatus.OK);
-            }
-            else {
+        } else {
             throw new RuntimeException("deleteCat - cat not found");
-            }
-        
-    } 
+        }
+
+    }
 }

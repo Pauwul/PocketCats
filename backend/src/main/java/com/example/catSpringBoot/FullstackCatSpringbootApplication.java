@@ -13,19 +13,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaRepositories
 @EnableConfigurationProperties
 @EntityScan
-public class FullstackCatSpringbootApplication{
-    public static void main(String[] args){
-        SpringApplication.run(FullstackCatSpringbootApplication.class,args);
+public class FullstackCatSpringbootApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(FullstackCatSpringbootApplication.class, args);
     }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedMethods("GET", "PUT", "POST", "DELETE").allowedOrigins("http://localhost:3000");
-            }
-        };
-    }
-    
 }
