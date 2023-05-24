@@ -22,6 +22,9 @@ import com.example.catSpringBoot.service.CatService;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller for the cats path
+ */
 @RestController
 @RequestMapping("/cats")
 public class CatController {
@@ -29,17 +32,35 @@ public class CatController {
     @Autowired
     private CatService catService;
 
+    /**
+     * Create a new cat
+     * 
+     * @param newCat the cat to create
+     * @return the id of the created cat
+     * @throws IOException
+     */
     @PostMapping("")
     public ResponseEntity<Long> createCat(@RequestBody CreateCatDto newCat) throws IOException {
         CatDto catDto = catService.createCat(newCat);
         return new ResponseEntity<Long>(catDto.getId(), HttpStatus.CREATED);
     }
 
+    /**
+     * Return the list of cats
+     * 
+     * @return the list of cats
+     */
     @GetMapping("")
     public List<Long> getCats() {
         return catService.getCats();
     }
 
+    /**
+     * Return a cat by its id
+     * 
+     * @param id the id of the cat
+     * @return the cat
+     */
     @GetMapping("/{id}")
     public ResponseEntity<CatDto> getCatById(@PathVariable Long id) {
         try {
@@ -49,6 +70,15 @@ public class CatController {
         }
     }
 
+    /**
+     * Update a cat
+     * 
+     * @param id           the id of the cat to update
+     * @param updateCatDto the new values of the cat
+     * @return the status of the update, 200 if the cat was updated, 404 if the cat
+     *         was not found
+     * @throws IOException
+     */
     @PutMapping("/{id}")
     public ResponseEntity<HttpStatus> updateCat(@PathVariable Long id, @RequestBody UpdateCatDto updateCatDto)
             throws IOException {
@@ -59,6 +89,13 @@ public class CatController {
         }
     }
 
+    /**
+     * Delete a cat
+     * 
+     * @param id the id of the cat to delete
+     * @return response status, 200 if the cat was deleted, 404 if the cat was not
+     *         found
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCat(@PathVariable Long id) {
         try {

@@ -116,7 +116,9 @@ What the commands above do:
 - [x] Installs dependencies of the frontend (npm install) and runs the frontend environment (npm run dev) at `localhost:3000`
 - [x] Installs the backend dependencies and runs the backend api at `localhost:5432`. You may use postman in order to test the routes.
 - [x] Runs the flask api for the cat classifier at `localhost:8000`.
-- [ ] Docs at `localhost:8080/api` implemented with OpenAPI (formerly known as SwaggerDocs).
+- [x] Docs for Java API `http://localhost:5432/swagger-ui/index.html` implemented with OpenAPI(cat endpoints).
+- [x] Docs for Python API `http://localhost:8000/api-docs` implemented with OpenAPI(cat identification).
+- [x] Javadoc for backend
 
 ## Contributors
 

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -16,13 +15,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Filter for the token authentication
+ */
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
-
+    /**
+     * The token provider
+     */
     @Autowired
     private TokenProvider tokenProvider;
 
     private static final Logger logger = LoggerFactory.getLogger(TokenAuthenticationFilter.class);
 
+    /**
+     * Filter the token authentication
+     * 
+     * @param request     the request
+     * @param response    the response
+     * @param filterChain the filter chain
+     * @throws ServletException servlet exception
+     * @throws IOException      io exception
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -42,6 +55,12 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Resolve the token
+     * 
+     * @param request the request
+     * @return the token
+     */
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         // System.out.println("Bearer token: " + bearerToken);

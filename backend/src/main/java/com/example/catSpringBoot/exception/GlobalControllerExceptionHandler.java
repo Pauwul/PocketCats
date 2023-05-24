@@ -10,9 +10,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.catSpringBoot.dto.ErrorDto;
 
+/**
+ * Global exception handler
+ */
 @ControllerAdvice(annotations = RestController.class)
 @Log4j2
 class GlobalControllerExceptionHandler {
+    /**
+     * Handle the ResponseStatusException
+     * 
+     * @param ex the exception
+     * @return http status
+     */
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorDto> handleResponseStatusException(ResponseStatusException ex) {
         log.error("response status exception", ex);
@@ -20,6 +29,12 @@ class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(errorDto, ex.getStatus());
     }
 
+    /**
+     * Handle the CatException
+     * 
+     * @param ex the exception
+     * @return http status
+     */
     @ExceptionHandler(CatException.class)
     public ResponseEntity<ErrorDto> handleCatException(CatException ex) {
         log.error("cat custom exception", ex);
@@ -28,6 +43,12 @@ class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(errorDto, httpStatus);
     }
 
+    /**
+     * Handle the RuntimeException
+     * 
+     * @param ex the exception
+     * @return http status
+     */
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex) {
         log.error("internal server error", ex);
