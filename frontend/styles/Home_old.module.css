@@ -1,59 +1,141 @@
 .main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+}
+
+.title {
+  position: relative;
+  font-size: 5rem;
+  text-transform: uppercase;
+  font-weight: 900;
+  font-family: "Catamaran", sans-serif;
+  font-style: italic;
+  color: transparent;
+  -webkit-text-stroke-width: 0.15rem;
+  -webkit-text-stroke-color: white;
+}
+
+.title::after {
+  position: absolute;
+  left: 0;
+  content: "WELCOME TO POCKETCATS!";
+  background: linear-gradient(
+    135deg,
+    #ff0000,
+    #ff3300 10%,
+    #ff6600 20%,
+    #ff9900 30%,
+    #ffcc00 40%,
+    #ffff00 50%,
+    #ccff00 60%,
+    #99ff00 70%,
+    #66ff00 80%,
+    #33ff00 90%,
+    #00ff00 100%,
+    #00ff33 110%,
+    #00ff66 120%,
+    #00ff99 130%,
+    #00ffcc 140%,
+    #00ffff 150%,
+    #00ccff 160%,
+    #0099ff 170%,
+    #0066ff 180%,
+    #0033ff 190%,
+    #0000ff
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  text-align: center;
+  margin: 1rem;
+  font-size: 4rem;
+  color: #f7f2f2;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 3rem;
+  padding: 1rem;
+}
+
+.card {
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: left;
+  width: 300px;
+  margin: 1rem;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+.card:hover,
+.card:focus,
+.card:active {
+  box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.card:nth-child(1) {
+  background-color: #694408;
+}
+
+.card:nth-child(2) {
+  background-color: #f78154;
+}
+
+.card:nth-child(3) {
+  background-color: #6a0573;
+}
+
+.card:nth-child(4) {
+  background-color: #522828;
+}
+
+.card:nth-child(5) {
+  background-color: #28d8d5;
+}
+
+.card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #830abc 0%, #0cbcaa 50%, #0b31a5 100%);
+  background-size: 200% 200%;
+  animation: gradientAnimation 4s linear infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  .description {
-    text-align: center;
-    margin: 1rem;
-    font-size: 1.5rem;
-    max-width: 800px;
+  50% {
+    background-position: 100% 50%;
   }
-  
-  .grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2rem;
-    margin-top: 3rem;
+  100% {
+    background-position: 0% 50%;
   }
-  
-  .card {
-    border: 1px solid #eaeaea;
-    border-radius: 10px;
-    padding: 1.5rem;
-    text-align: left;
-    width: 350px;
-    transition: color 0.15s ease, border-color 0.15s ease;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    font-family: 'Roboto', sans-serif;
-  }
-  
-  .card:hover,
-  .card:focus,
-  .card:active {
-    color: #26c9a6;
-    border-color: #0eb296;
-  }
-  
-  .card h2 {
-    margin: 0 0 1rem 0;
-    font-size: 24px;
-    font-weight: 600;
-  }
-  
-  .card p {
-    margin: 0;
-    font-size: 18px;
-    line-height: 1.5;
-  }
-  
-  .container {
-    min-height: 100vh;
-  }
-  
+}

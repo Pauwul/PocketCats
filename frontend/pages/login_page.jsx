@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "../styles/LoginPage_old.module.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -10,6 +10,14 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  // Checking for token on mount
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      router.push("/page_after_login");
+    }
+  }, []);
 
   const isEmailValid = (email) => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;

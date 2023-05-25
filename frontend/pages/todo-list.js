@@ -4,7 +4,7 @@ import { debounce } from "lodash";
 import ToDo from "../components/todo";
 
 export default function ToDoList() {
-  const [todos, setTodos] = useState(null);
+  const [todos, setTodos] = useState([]);
   const [mainInput, setMainInput] = useState("");
   const [filter, setFilter] = useState();
   const didFetchRef = useRef(false);
@@ -14,7 +14,8 @@ export default function ToDoList() {
       didFetchRef.current = true;
       fetchTodos();
     }
-  }, []);
+    console.log("todos:", todos);
+  }, [todos]);
 
   async function fetchTodos(completed) {
     const token = localStorage.getItem("authToken");
@@ -46,6 +47,7 @@ export default function ToDoList() {
     copy[idx] = changedToDo;
     debouncedUpdateTodo(changedToDo);
     setTodos(copy);
+    console.log("todos:", todos);
   }
 
   async function updateTodo(todo) {
@@ -66,6 +68,7 @@ export default function ToDoList() {
         },
       }
     );
+    console.log("todos:", todos);
   }
 
   async function addToDo(name) {
